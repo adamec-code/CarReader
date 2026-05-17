@@ -21,12 +21,14 @@ namespace CarReader.Application.Services
         {
             try
             {
-                IReadOnlyCollection<Car> data = repository.Load(path);
+                IReadOnlyCollection<Car> cars = repository.Load(path);
 
-                if (data == null || !data.Any())
+                if (cars == null || !cars.Any())
                 {
                     return DataSource<CarDto>.CreateError("Načtená data jsou prázdná.");
                 }
+
+                var data = cars.OrderByDescending(x => x.Price).ToList();
 
                 return DataSource<CarDto>.CreateSuccess(mapper.ToDtos(data));
             }
