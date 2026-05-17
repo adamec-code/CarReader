@@ -1,7 +1,9 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
-using System.Xml.Linq;
-using CarReader.Presentation.Models;
+using CarReader.Application.Common;
+using CarReader.Application.Models;
+using CarReader.Application.Repositories;
+using CarReader.Application.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -12,13 +14,18 @@ namespace CarReader.Presentation.ViewModels
     {
         public string Version => $"Verze: {Assembly.GetExecutingAssembly().GetName().Version}";
 
+        private readonly ICarService service;
+
         [ObservableProperty]
-        private ObservableCollection<Car> cars = [];
+        private ObservableCollection<CarDto> cars = [];
 
         [ObservableProperty]
         private string infoMessage = string.Empty;
 
-        public CarReaderViewModel() { }
+        public CarReaderViewModel(ICarService service)
+        {
+            this.service = service;
+        }
 
         [RelayCommand]
         private void UploadData()
@@ -33,35 +40,16 @@ namespace CarReader.Presentation.ViewModels
                 return;
             }
 
-            try
+            DataSource<CarDto> dataSource = service.LoadCars(dialog.FileName);
+
+            if (dataSource.IsOk)
             {
-                var doc = XDocument.Load(dialog.FileName);
-
-                var data = doc.Root!.Elements("car")
-                    .Select(x => new Car
-                    {
-                        Name = x.Element("name")?.Value ?? "",
-                        SellDate = DateTime.Parse(x.Element("sellDate")?.Value ?? DateTime.MinValue.ToString()),
-                        Price = double.Parse(x.Element("price")?.Value ?? "0"),
-                        Vat = double.Parse(x.Element("vat")?.Value ?? "0"),
-                    })
-                    .ToArray();
-
-                Cars = new ObservableCollection<Car>(data);
-
-                if (data.Count() > 0)
-                {
-                    InfoMessage = "Soubor úspěšně načten.";
-                }
-                else
-                {
-                    InfoMessage = "Soubor neobsahuje žádná data.";
-                }
+                Cars = new ObservableCollection<CarDto>(dataSource.Data);
+                InfoMessage = "Soubor úspěšně načten.";
             }
-            catch (Exception ex)
+            else
             {
-                InfoMessage = $"Chyba při načítání XML: {ex.Message}";
-                Cars.Clear();
+                InfoMessage = dataSource.ErrorMessage;
             }
         }
     }

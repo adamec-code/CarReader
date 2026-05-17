@@ -13,4 +13,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.8" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarReader.Application\CarReader.Application.csproj" />
+    <ProjectReference Include="..\CarReader.Infrastructure\CarReader.Infrastructure.csproj" />
+  </ItemGroup>
 </Project>

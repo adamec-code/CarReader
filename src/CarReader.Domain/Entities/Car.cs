@@ -1,4 +1,4 @@
-namespace CarReader.Presentation.Models
+namespace CarReader.Domain.Entities
 {
     public class Car
     {
