@@ -3,4 +3,5 @@
   <Project Path="src/CarReader.Domain/CarReader.Domain.csproj" Id="c72dbc55-f357-4a73-8ab5-344b046fce73" />
   <Project Path="src/CarReader.Infrastructure/CarReader.Infrastructure.csproj" Id="45328b2c-f913-4562-a853-b6edcca53692" />
   <Project Path="src/CarReader.Presentation/CarReader.Presentation.csproj" />
+  <Project Path="tests/CarReader.Tests/CarReader.Tests.csproj" />
 </Solution>

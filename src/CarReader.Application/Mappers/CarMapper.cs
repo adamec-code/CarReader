@@ -9,6 +9,6 @@ namespace CarReader.Application.Mappers
     {
         public partial CarDto ToDto(Car car);
 
-        public partial IReadOnlyCollection<CarDto> ToDtos(IReadOnlyCollection<Car> cars);
+        public partial List<CarDto> ToDtos(List<Car> cars);
     }
 }
