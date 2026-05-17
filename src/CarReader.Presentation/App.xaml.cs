@@ -6,6 +6,7 @@ using CarReader.Infrastructure.Repositories;
 using CarReader.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using MainApplication = System.Windows.Application;
 
 namespace CarReader.Presentation
@@ -19,7 +20,10 @@ namespace CarReader.Presentation
 
         public App()
         {
+            Log.Logger = new LoggerConfiguration().MinimumLevel.Information().WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day).CreateLogger();
+
             AppHost = Host.CreateDefaultBuilder()
+                .UseSerilog()
                 .ConfigureServices(
                     (context, services) =>
                     {
