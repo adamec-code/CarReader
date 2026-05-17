@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using CarReader.Application.Common;
 using CarReader.Application.Models;
-using CarReader.Application.Repositories;
 using CarReader.Application.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -49,6 +48,7 @@ namespace CarReader.Presentation.ViewModels
             }
             else
             {
+                Cars = [];
                 InfoMessage = dataSource.ErrorMessage;
             }
         }
