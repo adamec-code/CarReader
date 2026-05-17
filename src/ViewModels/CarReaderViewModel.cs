@@ -1,9 +1,9 @@
-﻿using CarReader.Models;
+﻿using System.Collections.ObjectModel;
+using System.Xml.Linq;
+using CarReader.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
-using System.Collections.ObjectModel;
-using System.Xml.Linq;
 
 namespace CarReader.ViewModels
 {
@@ -15,9 +15,7 @@ namespace CarReader.ViewModels
         [ObservableProperty]
         private string infoMessage = string.Empty;
 
-        public CarReaderViewModel()
-        {
-        }
+        public CarReaderViewModel() { }
 
         [RelayCommand]
         private void UploadData()
@@ -36,14 +34,13 @@ namespace CarReader.ViewModels
             {
                 var doc = XDocument.Load(dialog.FileName);
 
-                var data = doc.Root!
-                    .Elements("car")
+                var data = doc.Root!.Elements("car")
                     .Select(x => new Car
                     {
                         Name = x.Element("name")?.Value ?? "",
                         SellDate = DateTime.Parse(x.Element("sellDate")?.Value ?? DateTime.MinValue.ToString()),
                         Price = double.Parse(x.Element("price")?.Value ?? "0"),
-                        Vat = double.Parse(x.Element("vat")?.Value ?? "0")
+                        Vat = double.Parse(x.Element("vat")?.Value ?? "0"),
                     })
                     .ToArray();
 

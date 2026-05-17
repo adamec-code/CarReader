@@ -1,5 +1,5 @@
-﻿using CarReader.ViewModels;
-using System.Windows;
+﻿using System.Windows;
+using CarReader.ViewModels;
 
 namespace CarReader
 {
