@@ -1,6 +1,6 @@
-﻿using System.Windows;
+using System.Windows;
 
-namespace CarReader
+namespace CarReader.Presentation
 {
     /// <summary>
     /// Interaction logic for App.xaml

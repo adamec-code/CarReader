@@ -1,4 +1,4 @@
-﻿namespace CarReader.Models
+namespace CarReader.Presentation.Models
 {
     public class Car
     {

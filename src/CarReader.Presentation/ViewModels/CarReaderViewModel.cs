@@ -1,12 +1,12 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Xml.Linq;
-using CarReader.Models;
+using CarReader.Presentation.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 
-namespace CarReader.ViewModels
+namespace CarReader.Presentation.ViewModels
 {
     public partial class CarReaderViewModel : ObservableObject
     {

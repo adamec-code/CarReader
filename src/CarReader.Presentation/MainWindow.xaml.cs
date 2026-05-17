@@ -1,7 +1,7 @@
-﻿using System.Windows;
-using CarReader.ViewModels;
+using System.Windows;
+using CarReader.Presentation.ViewModels;
 
-namespace CarReader
+namespace CarReader.Presentation
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
