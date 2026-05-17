@@ -1,15 +1,26 @@
 #!/bin/sh
 
-echo "Running CSharpier..."
+echo "Running CSharpier on staged files..."
 
-dotnet csharpier format .
+# Získání staged C# souborů
+FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.cs$')
+
+# Pokud nejsou staged žádné .cs soubory
+if [ -z "$FILES" ]; then
+  echo "No staged C# files."
+  exit 0
+fi
+
+# Spuštění CSharpier pouze na staged souborech
+echo "$FILES" | xargs dotnet csharpier format
 
 if [ $? -ne 0 ]; then
   echo "CSharpier failed."
   exit 1
 fi
 
-git add .
+# Re-stage přeformátovaných souborů
+echo "$FILES" | xargs git add
 
 echo "Formatting complete."
 
