@@ -8,11 +8,11 @@ namespace CarReader.Presentation
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(CarReaderViewModel viewModel)
         {
             InitializeComponent();
 
-            DataContext = new CarReaderViewModel();
+            DataContext = viewModel;
         }
     }
 }
