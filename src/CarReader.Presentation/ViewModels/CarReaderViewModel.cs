@@ -45,7 +45,7 @@ namespace CarReader.Presentation.ViewModels
             if (dataSource.IsOk)
             {
                 Cars = new ObservableCollection<CarDto>(dataSource.Data);
-                InfoMessage = "Soubor úspěšně načten.";
+                InfoMessage = "Data úspěšně načtena.";
             }
             else
             {
