@@ -1,6 +1,4 @@
-using System.Runtime.ConstrainedExecution;
 using CarReader.Application.Mappers;
-using CarReader.Application.Models;
 using CarReader.Application.Repositories;
 using CarReader.Application.Services;
 using CarReader.Domain.Entities;
