@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Xml.Linq;
 using CarReader.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,6 +10,8 @@ namespace CarReader.ViewModels
 {
     public partial class CarReaderViewModel : ObservableObject
     {
+        public string Version => $"Verze: {Assembly.GetExecutingAssembly().GetName().Version}";
+
         [ObservableProperty]
         private ObservableCollection<Car> cars = [];
 
@@ -44,10 +47,11 @@ namespace CarReader.ViewModels
                     })
                     .ToArray();
 
+                Cars = new ObservableCollection<Car>(data);
+
                 if (data.Count() > 0)
                 {
                     InfoMessage = "Soubor úspěšně načten.";
-                    Cars = new ObservableCollection<Car>(data);
                 }
                 else
                 {
@@ -57,6 +61,7 @@ namespace CarReader.ViewModels
             catch (Exception ex)
             {
                 InfoMessage = $"Chyba při načítání XML: {ex.Message}";
+                Cars.Clear();
             }
         }
     }
