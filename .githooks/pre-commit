@@ -1,0 +1,16 @@
+#!/bin/sh
+
+echo "Running CSharpier..."
+
+dotnet csharpier format .
+
+if [ $? -ne 0 ]; then
+  echo "CSharpier failed."
+  exit 1
+fi
+
+git add .
+
+echo "Formatting complete."
+
+exit 0
