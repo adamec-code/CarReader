@@ -34,6 +34,8 @@ public class CarServiceTests
 
         var result = service.LoadCars("test.xml");
 
+        repoMock.Verify(r => r.Load(It.IsAny<string>()), Times.Once);
+
         result.IsOk.Should().BeTrue();
         result.Data.Should().NotBeNull();
         result.Data.Should().HaveCount(1);
@@ -54,6 +56,30 @@ public class CarServiceTests
         var service = new CarService(repoMock.Object, new CarMapper(), loggerMock.Object);
 
         var result = service.LoadCars("test.xml");
+
+        repoMock.Verify(r => r.Load(It.IsAny<string>()), Times.Once);
+
+        result.IsOk.Should().BeFalse();
+        result.ErrorMessage.Should().NotBeNullOrWhiteSpace();
+    }
+
+    [Fact]
+    public void LoadCars_LogErrorAndReturnsErrorMessage_WhenRepositoryLoadFailed()
+    {
+        var repoMock = new Mock<ICarRepository>();
+        var loggerMock = new Mock<ILogger<CarService>>();
+        string errorMsg = "Failed to load cars";
+
+        repoMock.Setup(r => r.Load(It.IsAny<string>())).Throws(new Exception(errorMsg));
+
+        var service = new CarService(repoMock.Object, new CarMapper(), loggerMock.Object);
+
+        var result = service.LoadCars("test.xml");
+
+        loggerMock.Verify(
+            x => x.Log(LogLevel.Error, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.Is<Exception>(ex => ex.Message.Contains(errorMsg)), It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+            Times.Once
+        );
 
         result.IsOk.Should().BeFalse();
         result.ErrorMessage.Should().NotBeNullOrWhiteSpace();
