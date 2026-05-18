@@ -10,11 +10,23 @@ namespace CarReader.Tests;
 
 public class CarServiceTests
 {
+    private readonly Mock<ICarRepository> repoMock;
+    private readonly Mock<ILogger<CarService>> loggerMock;
+
+    public CarServiceTests()
+    {
+        repoMock = new Mock<ICarRepository>();
+        loggerMock = new Mock<ILogger<CarService>>();
+    }
+
+    private CarService CreateService()
+    {
+        return new CarService(repoMock.Object, new CarMapper(), loggerMock.Object);
+    }
+
     [Fact]
     public void LoadCars_ReturnsData_WhenRepositoryReturnsCars()
     {
-        var repoMock = new Mock<ICarRepository>();
-        var loggerMock = new Mock<ILogger<CarService>>();
         var now = DateTime.Now;
 
         var cars = new List<Car>
@@ -30,7 +42,7 @@ public class CarServiceTests
 
         repoMock.Setup(r => r.Load(It.IsAny<string>())).Returns(cars);
 
-        var service = new CarService(repoMock.Object, new CarMapper(), loggerMock.Object);
+        var service = CreateService();
 
         var result = service.LoadCars("test.xml");
 
@@ -48,12 +60,9 @@ public class CarServiceTests
     [Fact]
     public void LoadCars_ReturnsErrorMessage_WhenRepositoryReturnsNoCars()
     {
-        var repoMock = new Mock<ICarRepository>();
-        var loggerMock = new Mock<ILogger<CarService>>();
-
         repoMock.Setup(r => r.Load(It.IsAny<string>())).Returns([]);
 
-        var service = new CarService(repoMock.Object, new CarMapper(), loggerMock.Object);
+        var service = CreateService();
 
         var result = service.LoadCars("test.xml");
 
@@ -66,13 +75,11 @@ public class CarServiceTests
     [Fact]
     public void LoadCars_LogErrorAndReturnsErrorMessage_WhenRepositoryLoadFailed()
     {
-        var repoMock = new Mock<ICarRepository>();
-        var loggerMock = new Mock<ILogger<CarService>>();
         string errorMsg = "Failed to load cars";
 
         repoMock.Setup(r => r.Load(It.IsAny<string>())).Throws(new Exception(errorMsg));
 
-        var service = new CarService(repoMock.Object, new CarMapper(), loggerMock.Object);
+        var service = CreateService();
 
         var result = service.LoadCars("test.xml");
 
