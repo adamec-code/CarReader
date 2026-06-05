@@ -5,6 +5,6 @@ namespace CarReader.Application.Services
 {
     public interface ICarService
     {
-        public DataSource<CarDto> LoadCars(string path);
+        public DataSource<CarDto> LoadWeekendSales(string path);
     }
 }

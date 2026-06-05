@@ -1,5 +1,4 @@
 using System.Windows;
-using CarReader.Application.Mappers;
 using CarReader.Application.Repositories;
 using CarReader.Application.Services;
 using CarReader.Infrastructure.Repositories;
@@ -27,9 +26,6 @@ namespace CarReader.Presentation
                 .ConfigureServices(
                     (context, services) =>
                     {
-                        // mappers
-                        services.AddSingleton<CarMapper>();
-
                         // services
                         services.AddSingleton<ICarService, CarService>();
 

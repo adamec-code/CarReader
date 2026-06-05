@@ -1,15 +1,13 @@
 namespace CarReader.Application.Models
 {
-    public class CarDto
+    public record CarDto
     {
-        public string Name { get; set; } = string.Empty;
+        public required string Name { get; init; }
 
-        public DateTime SellDate { get; set; }
+        public bool IsWeekendSell { get; init; }
 
-        public double Price { get; set; }
+        public double Price { get; init; }
 
-        public double Vat { get; set; }
-
-        public double PriceWithVat { get; set; }
+        public double PriceWithVat { get; init; }
     }
 }

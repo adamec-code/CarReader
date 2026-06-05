@@ -6,6 +6,8 @@ namespace CarReader.Domain.Entities
 
         public DateTime SellDate { get; set; }
 
+        public bool IsWeekendSell => SellDate.DayOfWeek == DayOfWeek.Saturday || SellDate.DayOfWeek == DayOfWeek.Sunday;
+
         public double Price { get; set; }
 
         public double Vat { get; set; }

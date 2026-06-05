@@ -39,7 +39,7 @@ namespace CarReader.Presentation.ViewModels
                 return;
             }
 
-            DataSource<CarDto> dataSource = service.LoadCars(dialog.FileName);
+            DataSource<CarDto> dataSource = service.LoadWeekendSales(dialog.FileName);
 
             if (dataSource.IsOk)
             {
