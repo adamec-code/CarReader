@@ -11,10 +11,11 @@ namespace CarReader.Infrastructure.Repositories
             var doc = XDocument.Load(path);
 
             var cars = doc.Root!.Elements("car")
+                .Where(x => DateTime.TryParse(x.Element("sellDate")?.Value, out _))
                 .Select(x => new Car
                 {
                     Name = x.Element("name")?.Value ?? "",
-                    SellDate = DateTime.Parse(x.Element("sellDate")?.Value ?? DateTime.MinValue.ToString()),
+                    SellDate = DateTime.Parse(x.Element("sellDate")!.Value),
                     Price = double.Parse(x.Element("price")?.Value ?? "0"),
                     Vat = double.Parse(x.Element("vat")?.Value ?? "0"),
                 })
